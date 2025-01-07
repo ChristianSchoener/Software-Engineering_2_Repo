@@ -2,6 +2,7 @@ name: Model-Training-Test
 on:
   pull_request:
     types: [opened, reopened, edited, merged]
+  push
 jobs:
   # This workflow contains a single job called "build"
   build:
