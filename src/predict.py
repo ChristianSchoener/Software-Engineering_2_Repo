@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 import pickle
 import sys
 
-model = pickle.load(open("./models/auto-mpg-baujahr","rb"))
+model = pickle.load(open("models/auto-mpg-baujahr","rb"))
 
 mpg = float(sys.argv[1])
 zylinder = float(sys.argv[2])
