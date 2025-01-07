@@ -18,10 +18,7 @@ jobs:
         with:
           python-version: 3.12
       - uses: py-actions/py-dependency-install@v4
-      # - uses: jannekem/run-python-script-action@v1.7
-      #   with:
-      #     script: src/training.py
-      - run python3 src/training.py
+      - run: python3 src/training.py
       - uses: actions/upload-artifact@v4.5.0
         with:
           name: auto-mpg-model_artifact
