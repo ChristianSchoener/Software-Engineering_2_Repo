@@ -22,4 +22,4 @@ jobs:
       - uses: actions/upload-artifact@v4.5.0
         with:
           name: auto-mpg-model_artifact
-          path: data/models/auto-mpg-baujahr
+          path: data/models/auto-mpg
