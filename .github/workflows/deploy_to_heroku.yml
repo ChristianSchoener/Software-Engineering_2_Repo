@@ -1,0 +1,46 @@
+name: Deploy to Production
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  train-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Switch to heroku branch
+        shell: bash
+        run: |
+          git config --global user.email ""
+          git config --global user.name "Github Actions"
+          git fetch --all --unshallow
+          git checkout heroku 2>/dev/null || git checkout -b heroku
+          git merge main -X theirs --allow-unrelated-histories
+      - uses: actions/setup-python@v5.3.0
+        with:
+          python-version: 3.12
+      - uses: py-actions/py-dependency-install@v4
+      - name: Train model
+        run: python3 src/train.py
+      - uses: actions/upload-artifact@v4.5.0
+        with:
+          name: auto-mpg-model_artifact
+          path: data/models/auto-mpg
+      - name: Push changes to heroku branch
+        shell: bash
+        run: |
+          git add .
+          git add --force data/models/auto-mpg
+          git commit -m "[CI] update trained model" || echo "No changes to commit"
+          git push --set-upstream origin heroku
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.13.15
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          branch: "heroku"
