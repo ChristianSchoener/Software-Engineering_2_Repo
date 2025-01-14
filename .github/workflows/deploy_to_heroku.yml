@@ -19,7 +19,7 @@ jobs:
           git merge main -X theirs --allow-unrelated-histories
       - uses: actions/setup-python@v5.3.0
         with:
-          python-version: 3.12
+          python-version: 3.9
       - uses: py-actions/py-dependency-install@v4
       - name: Train model
         run: python3 src/train.py
