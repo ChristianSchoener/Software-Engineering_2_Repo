@@ -16,7 +16,7 @@ jobs:
           repository: 'ChristianSchoener/Software-Engineering_2_Repo'
       - uses: actions/setup-python@v5.3.0
         with:
-          python-version: 3.9
+          python-version: 3.12
       - uses: py-actions/py-dependency-install@v4
       - run: python3 src/train.py
       - uses: actions/upload-artifact@v4.5.0
